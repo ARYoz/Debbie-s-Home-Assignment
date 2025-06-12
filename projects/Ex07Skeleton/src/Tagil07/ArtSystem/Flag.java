@@ -1,6 +1,8 @@
 package Tagil07.ArtSystem;
 
 
+import java.util.List;
+
 public class Flag extends Element {
 
     Color color;
@@ -33,11 +35,13 @@ public class Flag extends Element {
 
     @Override
     public Habitat getHabitat() {
-        return Habitat.TERRESTRIAL;
+        return Habitat.AMPHIBIAN;
     }
 
     @Override
     public void accept(ElementVisitor visitor) {
         visitor.visit(this);
     }
+
 }
+

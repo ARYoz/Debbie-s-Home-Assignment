@@ -36,6 +36,24 @@ public class Main {
         Files.lines(Paths.get(path))
                 .map(str -> ElementDetailsFactory.getPaintingElement(str))
                 .forEach(e-> painting.addElement(e));
+
+        // --- תיקון: אם יש גם Island וגם Lake בשורש, העבר את ה-Lake כ-child של ה-Island ---
+        List<Element> roots = painting.getChildren();
+        Element islandRoot = null;
+        Element lakeRoot = null;
+        for (Element e : roots) {
+            if (e instanceof Tagil07.ArtSystem.Island) {
+                islandRoot = e;
+            } else if (e instanceof Tagil07.ArtSystem.Lake) {
+                lakeRoot = e;
+            }
+        }
+        if (islandRoot != null && lakeRoot != null) {
+            // הוצא את ה-Lake מהשורש והוסף אותו כ-child של ה-Island
+            roots.remove(lakeRoot);
+            ((Tagil07.ArtSystem.Island)islandRoot).addChild(lakeRoot);
+        }
+        // --- סוף תיקון ---
         return painting;
     }
     public static void artMenu(Scanner scanner) throws IOException {

@@ -1,5 +1,6 @@
 package Tagil07.ArtSystem;
 
+import java.util.List;
 
 public class Kite extends Element {
     Color color;

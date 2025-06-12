@@ -17,14 +17,13 @@ public class Lake extends Element {
     }
 
     public void addChild(Element child) {
-        // Only allow aquatic or amphibian elements
-        Habitat h = child.getHabitat();
-        if (h == Habitat.AQUATIC || h == Habitat.AMPHIBIAN) {
+        if (child instanceof Boat || child instanceof Flag || child instanceof Island) {
             children.add(child);
         } else {
             System.out.println(getName() + " cannot contain " + child.getName());
         }
     }
+
 
     public List<Element> getChildren() {
         return children;

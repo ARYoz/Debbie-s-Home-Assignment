@@ -1,5 +1,7 @@
 package Tagil07.ArtSystem;
 
+import java.util.List;
+
 public class Tree extends Element {
 
     int leavesAmount;
@@ -35,4 +37,3 @@ public class Tree extends Element {
         visitor.visit(this);
     }
 }
-

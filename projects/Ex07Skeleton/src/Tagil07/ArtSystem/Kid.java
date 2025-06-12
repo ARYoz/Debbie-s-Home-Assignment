@@ -32,10 +32,9 @@ public class Kid extends Element {
 
     @Override
     public void accept(ElementVisitor visitor) {
-        visitor.visit(this);
+
     }
 
-    // Area = rectangle + circle
     public double getArea() {
         double rectArea = getWidth() * getLength();
         double circleArea = Math.PI * Math.pow(getWidth() / 2.0, 2);

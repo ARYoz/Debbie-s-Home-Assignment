@@ -31,4 +31,6 @@ public class Boat extends Element {
         double halfCircleArea = (Math.PI * Math.pow(getWidth() / 2.0, 2)) / 2.0;
         return rectArea + halfCircleArea;
     }
+
+
 }

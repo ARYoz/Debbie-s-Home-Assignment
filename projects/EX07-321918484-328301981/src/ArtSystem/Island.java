@@ -25,7 +25,7 @@ public class Island extends Element {
 
     @Override
     public Habitat getHabitat() {
-        return Habitat.AQUATIC;
+        return Habitat.AMPHIBIAN;
     }
 
     @Override
@@ -35,14 +35,22 @@ public class Island extends Element {
         return Math.PI * radius * radius;
     }
 
-    // Composite methods
-    public void addElement(Element e) {
-        if (e.getHabitat() == Habitat.TERRESTRIAL || e.getHabitat() == Habitat.AMPHIBIAN) {
-            elements.add(e);
+    public boolean addElement(Element element) {
+        if (elements.stream().anyMatch(e -> e.getFullName().equals(element.getFullName()))) {
+            System.out.println("Already exists in " + getFullName() + ": " + element.getFullName());
+            return false;
+        }
+
+        if (element.getHabitat() == Habitat.TERRESTRIAL || element.getHabitat() == Habitat.AMPHIBIAN) {
+            elements.add(element);
+            System.out.println("Island " + getFullName() + " added: " + element.getFullName());
+            return true;
         } else {
-            System.out.println(this.path + " cannot contain " + e.getName());
+            System.out.println(this.getFullName() + " cannot contain " + element.getName());
+            return false;
         }
     }
+
 
     public void removeElement(Element e) {
         elements.remove(e);

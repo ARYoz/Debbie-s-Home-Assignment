@@ -22,7 +22,7 @@ public class Lake extends Element {
 
     @Override
     public Habitat getHabitat() {
-        return Habitat.TERRESTRIAL;
+        return Habitat.AQUATIC;
     }
 
     @Override
@@ -39,13 +39,24 @@ public class Lake extends Element {
         return Math.PI * radius * radius;
     }
 
-    public void addElement(Element element) {
+    public boolean addElement(Element element) {
+        if (elements.stream().anyMatch(e -> e.getFullName().equals(element.getFullName()))) {
+            System.out.println("Already exists in " + getFullName() + ": " + element.getFullName());
+            return false;
+        }
+
         if (element.getHabitat() == Habitat.AQUATIC || element.getHabitat() == Habitat.AMPHIBIAN) {
             elements.add(element);
+            System.out.println("Lake " + getFullName() + " added: " + element.getFullName());
+            return true;
         } else {
             System.out.println(this.getFullName() + " cannot contain " + element.getName());
+            return false;
         }
     }
+
+
+
 
     public List<Element> getElements() {
         return elements;

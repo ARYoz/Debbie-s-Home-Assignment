@@ -14,24 +14,37 @@ public class Painting {
         elementList = new ArrayList<>();
         pathToElementMap = new HashMap<>();
     }
-
     public void addElement(Element element) {
-        pathToElementMap.put(element.getFullName(), element);
+        System.out.println("Trying to add: " + element.getFullName());
+
+        if (pathToElementMap.containsKey(element.getFullName())) {
+            System.out.println("Already exists globally: " + element.getFullName());
+            return;
+        }
 
         if (element.getPath().isEmpty()) {
             elementList.add(element);
+            pathToElementMap.put(element.getFullName(), element);
+            System.out.println("Added to root elements: " + element.getFullName());
         } else {
-            Element containingElement = pathToElementMap.get(element.getPath());
-
-            if (containingElement instanceof Lake) {
-                ((Lake) containingElement).addElement(element);
-            } else if (containingElement instanceof Island) {
-                ((Island) containingElement).addElement(element);
+            Element parent = pathToElementMap.get(element.getPath());
+            if (parent instanceof Lake) {
+                if (((Lake) parent).addElement(element)) {
+                    pathToElementMap.put(element.getFullName(), element);
+                    System.out.println("Registered in map: " + element.getFullName());
+                }
+            } else if (parent instanceof Island) {
+                if (((Island) parent).addElement(element)) {
+                    pathToElementMap.put(element.getFullName(), element);
+                    System.out.println("Registered in map: " + element.getFullName());
+                }
             } else {
-                System.out.println(containingElement.getFullName() + " cannot contain " + element.getName());
+                System.out.println((parent != null ? parent.getFullName() : "Unknown") + " cannot contain " + element.getName());
             }
         }
     }
+
+
 
     public String getName() {
         return Painting.class.getSimpleName().toLowerCase();

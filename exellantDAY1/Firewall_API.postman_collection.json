@@ -1,0 +1,187 @@
+{
+  "info": {
+    "name": "Firewall Rules API",
+    "description": "RESTful API for managing firewall rules with TypeScript and Express",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "health"]
+        }
+      }
+    },
+    {
+      "name": "Add IPs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"values\": [\"192.168.1.100\", \"10.0.0.50\"],\n  \"mode\": \"blacklist\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/ip",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "ip"]
+        }
+      }
+    },
+    {
+      "name": "Remove IPs",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"values\": [\"192.168.1.100\"],\n  \"mode\": \"blacklist\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/ip",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "ip"]
+        }
+      }
+    },
+    {
+      "name": "Add URLs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"values\": [\"malware.com\", \"phishing.net\"],\n  \"mode\": \"blacklist\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/url",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "url"]
+        }
+      }
+    },
+    {
+      "name": "Remove URLs",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"values\": [\"malware.com\"],\n  \"mode\": \"blacklist\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/url",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "url"]
+        }
+      }
+    },
+    {
+      "name": "Add Ports",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"values\": [22, 23, 3389],\n  \"mode\": \"blacklist\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/port",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "port"]
+        }
+      }
+    },
+    {
+      "name": "Remove Ports",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"values\": [22],\n  \"mode\": \"blacklist\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/port",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "port"]
+        }
+      }
+    },
+    {
+      "name": "Get All Rules",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/rules",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "rules"]
+        }
+      }
+    },
+    {
+      "name": "Toggle Rule Activation",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ips\": {\n    \"ids\": [1],\n    \"mode\": \"blacklist\",\n    \"active\": false\n  },\n  \"urls\": {\n    \"ids\": [3],\n    \"mode\": \"blacklist\",\n    \"active\": true\n  },\n  \"ports\": {\n    \"ids\": [5],\n    \"mode\": \"blacklist\",\n    \"active\": false\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/firewall/rules",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "firewall", "rules"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Debbie Home Assignment",
+    "slug": "debbie-home-assignment",
+    "version": "1.0.0",
+    "userInterfaceStyle": "automatic",
+    "scheme": "debbie-home-assignment",
+    "owner": "aryoz",
+    "extra": {
+      "eas": {
+        "projectId": "3f90f79f-41cf-46b6-afef-da82bbd2fca8"
+      }
+    },
+    "plugins": [
+      "expo-asset"
+    ],
+    "android": {
+      "package": "com.objectObject.debbiehomeassignment",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "data": [
+            {
+              "scheme": "exp+debbie-home-assignment"
+            },
+            {
+              "scheme": "debbie-home-assignment"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "ios": {
+      "bundleIdentifier": "com.objectObject.debbiehomeassignment",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ describe("auth-storage", () => {
   });
 
   it("getUserEmail returns stored value", async () => {
-    (AsyncStorage.getItem as jest.Mock).mockResolvedValue("user@example.com");
+    (AsyncStorage.getItem as unknown as jest.Mock).mockResolvedValue("user@example.com");
     const email = await getUserEmail();
     expect(email).toBe("user@example.com");
     expect(AsyncStorage.getItem).toHaveBeenCalledWith("user_email");

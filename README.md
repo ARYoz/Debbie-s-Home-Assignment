@@ -1,151 +1,85 @@
 # Debbie's Home Assignment
 
-Cross-platform app (login + Delete Account) with NestJS backend.
+Cross-platform app (iOS, Android, Web) with **login** and **Delete Account**, backed by a NestJS API.  
+Built with **Expo**, **expo-router**, **NativeWind**, and **NestJS**.
 
 ---
 
-## Requirements — Checklist
+## See the app
 
-| Requirement | Location |
-|-------------|----------|
-| **App:** Login screen | `frontend/app/login.tsx` |
-| **App:** After login → Home screen with "Delete Account" button | `frontend/app/home.tsx` |
-| **Tech:** expo-router for navigation | `frontend/app/` (file-based routing) |
-| **Tech:** NativeWind for styling | `className` in `frontend/app/*.tsx`, `frontend/components/Button.tsx` |
-| **Tech:** class-variance-authority (cva) | `frontend/components/Button.tsx` (variants: primary, danger) |
-| **App:** Expo Dev Client (not Expo Go) | `frontend/package.json` — `expo-dev-client`, `frontend/eas.json` |
-| **Backend:** NestJS, TypeScript | `backend/` |
-| **Backend:** User login | `POST /auth/login` |
-| **Backend:** Delete user | `DELETE /users/me` |
-| **Tests:** Backend | `backend/` — `npm test` |
-| **Tests:** Frontend | `frontend/` — `npm test` |
+### Android (pre-built)
+
+Install without cloning the repo:
+
+**[Download Android build (APK)](https://expo.dev/accounts/aryoz/projects/debbie-home-assignment/builds/c3db646d-bf09-4d3b-b4df-0153)**
+
+Open the link on your phone or computer and install.  
+*For login and Delete Account to work, run the backend locally (see below) or point the app to a deployed API.*
+
+*iOS build: to be added.*
 
 ---
 
-## How to run — Step by step
+## Run locally (backend + frontend)
+
+Dependencies are not included in the repo (e.g. when you download a zip). Run `npm install` in both **backend** and **frontend** before running the app — see steps below.
 
 ### 1. Backend
 
-Open a terminal:
-
 ```bash
 cd backend
-```
-
-Create a `.env` file (once):
-
-- **Windows:**  
-  `copy .env.example .env`
-- **Mac/Linux:**  
-  `cp .env.example .env`
-
-Install and run:
-
-```bash
 npm install
-npm run start:dev
+npm run start
 ```
 
-If everything is OK you should see:
-
-- `Backend running at http://localhost:3000`
-- `Seeded demo user: demo@example.com / demo123`
-
+Server runs at **http://localhost:3000**.  
 Demo user: **demo@example.com** / **demo123**.
 
----
+### 2. Frontend
 
-### 2. Frontend (browser check — simplest)
-
-Open a **second terminal** (keep the backend running in the first):
+In a **new terminal** (with backend still running):
 
 ```bash
 cd frontend
-```
-
-Create `.env` (once):
-
-- **Windows:**  
-  `copy .env.example .env`
-- **Mac/Linux:**  
-  `cp .env.example .env`
-
-In `.env`, ensure you have (for web testing):
-
-```
-EXPO_PUBLIC_API_URL=http://localhost:3000
-```
-
-Install and run:
-
-```bash
 npm install
-npx expo start --web
+npm run start
 ```
 
-A browser will open with the app. Verify:
+- Press **w** for web, or scan the QR code on a device.
+- Sign in with **demo@example.com** / **demo123**.
+- Use the Home screen and **Delete Account**.
 
-1. **Login** screen appears — enter **demo@example.com** / **demo123** and tap Sign in.
-2. You are taken to **Home** with the **Delete Account** button.
-3. Tap Delete Account → confirm → you return to Login.
+### 3. Environment (`.env`)
+
+You need a `.env` file in **backend** and in **frontend**. If the repo has existing `.env` files (e.g. with another IP), create your own or edit them.
+
+- **Backend** (`backend/.env`): set port/DB as needed. Default runs at `http://localhost:3000`.
+- **Frontend** (`frontend/.env`): set `EXPO_PUBLIC_API_URL` to where the backend is reachable:
+  - **Web (browser on this computer):** use `http://localhost:3000` — the browser runs on your machine, so localhost is correct.
+  - **Physical device (phone/tablet):** use your computer’s IP on the local network (e.g. `http://192.168.0.10:3000`) so the device can reach the backend. Find the IP in your OS network settings.
+
+### 4. Tests
+
+- Backend: `cd backend && npm test`
+- Frontend: `cd frontend && npm test`
 
 ---
 
-### 3. Running tests
+## Tech stack
 
-**Backend:**
+| Layer   | Stack |
+|---------|--------|
+| App     | Expo (Dev Client), expo-router, NativeWind |
+| Backend | NestJS, TypeScript, TypeORM, SQLite |
+| Auth    | Login (email + password); Delete account (email only) |
 
-```bash
-cd backend
-npm test
-```
-
-**Frontend:**
-
-```bash
-cd frontend
-npm test
-```
-
-Both should pass (all tests green).
+**API:** `POST /auth/login`, `POST /users/delete`.
 
 ---
 
-## Command summary (copy-paste)
+## Project structure
 
-```text
-# Terminal 1 — Backend
-cd backend
-copy .env.example .env
-npm install
-npm run start:dev
+- **`frontend/`** — Expo app: `app/` (routes), `lib/` (API & auth), `components/`
+- **`backend/`** — NestJS: controllers, services, SQLite under `data/`
 
-# Terminal 2 — Frontend (after backend is running)
-cd frontend
-copy .env.example .env
-npm install
-npx expo start --web
-```
-
-For tests: `cd backend` → `npm test`; `cd frontend` → `npm test`.
-
----
-
-## iOS / Android (Expo Dev Client)
-
-To run on a simulator or device with **Expo Dev Client** (not Expo Go):
-
-```bash
-cd frontend
-npx expo run:ios
-# or
-npx expo run:android
-```
-
-**Make the terminal QR work when you scan it on the phone:** The terminal QR uses a link like `exp+debbie-home-assignment://...`. The **browser** cannot open it (you get ERR_UNKNOWN_URL_SCHEME). Only the **Expo Dev Client app** can. Do this once: (1) Build the app so it registers for that link: `cd frontend` then `npx eas build --platform android --profile preview`. (2) Install the new APK on the phone (open the EAS build page on the phone and install). (3) When you first scan the terminal QR and tap the link, if Android asks “Open with”, choose **Debbie Home Assignment** and tap **Always**. After that, scanning the terminal QR and tapping will open the app on the phone. In `frontend/.env` set `REACT_NATIVE_PACKAGER_HOSTNAME` and `EXPO_PUBLIC_API_URL` to your PC IP (e.g. `10.0.0.3`) so the app can reach Metro and the backend. For login from the phone: same Wi‑Fi; see `scripts/README-firewall.md` if the phone cannot reach the backend.
-
-In the frontend `.env`, set the backend URL to your machine’s IP, e.g.:
-
-`EXPO_PUBLIC_API_URL=http://192.168.1.XX:3000`
-
-(Replace with your machine’s actual IP on the network.)
+Demo user: **demo@example.com** / **demo123**.

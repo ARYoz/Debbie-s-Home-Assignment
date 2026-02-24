@@ -5,13 +5,16 @@
 const mockFetch = jest.fn();
 (global as unknown as { fetch: typeof fetch }).fetch = mockFetch;
 
+let api: { login: (email: string, password: string) => Promise<{ success: true; email: string }>; deleteAccount: (email: string) => Promise<{ message: string; email: string }> };
+beforeAll(() => {
+  api = require("../api").api;
+});
 beforeEach(() => {
   mockFetch.mockReset();
 });
 
 describe("api.login", () => {
   it("calls POST /auth/login and returns success and email", async () => {
-    const { api } = await import("../api");
     mockFetch.mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ success: true, email: "a@b.com" }),
@@ -31,7 +34,6 @@ describe("api.login", () => {
   });
 
   it("throws when response is not ok", async () => {
-    const { api } = await import("../api");
     mockFetch.mockResolvedValue({ ok: false, text: () => Promise.resolve("Unauthorized") });
 
     await expect(api.login("a@b.com", "wrong")).rejects.toThrow();
@@ -40,7 +42,6 @@ describe("api.login", () => {
 
 describe("api.deleteAccount", () => {
   it("calls POST /users/delete with email", async () => {
-    const { api } = await import("../api");
     mockFetch.mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ message: "Account deleted", email: "a@b.com" }),

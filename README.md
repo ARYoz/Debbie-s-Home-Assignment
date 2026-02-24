@@ -9,8 +9,6 @@ Built with **Expo**, **expo-router**, **NativeWind**, and **NestJS**.
 
 ### Android (pre-built)
 
-Install without cloning the repo:
-
 **[Download Android build (APK)](https://expo.dev/accounts/aryoz/projects/debbie-home-assignment/builds/c3db646d-bf09-4d3b-b4df-0153)**
 
 Open the link on your phone or computer and install.  
